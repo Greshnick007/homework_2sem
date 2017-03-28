@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>json three</title>
+	</head>	
+	<body>
+	<span class="data"></span>
+	<pre></pre>
+		<script>
+const pre = document.querySelector('pre'), print = x=> pre.textContent += x + '\n';	
+
+let data_array = '';
+
+const json = './tree.json';
+
+function require(jsn, func) {
+fetch(jsn)
+  .then(function(response) {
+    return response.json();
+   })
+	.then(function(data) {
+  	print('Получили данные:\n'+JSON.stringify(data));
+  
+  	if (typeof func != 'undefined') {
+  		print ('Вывод дерева JSON:');
+  		func(data);
+  	}
+
+  })
+  .catch( print );
+}
+
+let link_func = function parse(object, node_index, length_parent_node) {
+	if (typeof node_index == 'undefined') node_index = 0;
+	if (typeof length_parent_node == 'undefined') length_parent_node = 0;
+	for (let [k, v] of Object.entries(object)) {
+	if (typeof v == 'object' && v != null) {
+		print(' '.repeat(length_parent_node)+k+':');
+		parse(v, ++node_index, (k.length)+length_parent_node);
+		node_index--;
+	} else {
+		print(' '.repeat(length_parent_node)+k+':'+v);
+	}
+	}
+}
+
+require(json, link_func);
+	</script> 
+	</body>
+	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</html>

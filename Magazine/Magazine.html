@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Интернет магазин</title>
+    <link rel="stylesheet" href="main.css"/>
+  </head>
+  <body>
+    <div id="score_parent"></div>
+    <div id="basket">
+      <p>Корзина</p>
+      <ul>
+      </ul>
+      <p>Общая цена: <span>0</span></p>
+    </div>
+<script>
+class Score {
+  constructor(uri, parentNode, basket, cost_limit) {
+    this.parentNode = parentNode;
+    this.basket = basket;
+	this.cost_limit = cost_limit;
+    this.showcaseURI = uri;
+    this.localEvents = {query:"addTask", response:"taskResult"};
+    this.CLIENT = document.querySelector(parentNode);
+    this.SERVER = document.querySelector(basket);
+    let ul = document.createElement('ul');
+    document.querySelector(parentNode).appendChild(ul);
+    this.showcase = document.querySelector(parentNode+' > ul');
+    this.load_data();
+
+
+
+
+    this.SERVER.addEventListener(this.localEvents.query, e=> {
+      let Cost = document.querySelector(this.basket+' > p:last-child > span');
+    if (Number(Cost.innerText)+Number(e.detail.content[1].innerHTML)>this.cost_limit) {
+      return  this.sendMessage({
+        where: document.querySelector(this.parentNode),
+        title: this.localEvents.response,
+        content: false
+      });
+    }
+    else
+    {
+      let li = this.SERVER.querySelectorAll('li');
+      let append = false;
+
+      for (let [key, value] of Object.entries(li)) {
+      if (value.id == e.detail.content[0].innerHTML) {
+        append = true;
+        let temp_count = Number(value.querySelector('span').innerHTML);
+        value.querySelector('span').innerHTML = temp_count+1;
+      }
+    }
+      if (append == false) {
+        const newLi = document.createElement('li');
+        newLi.id = e.detail.content[0].innerHTML;
+        newLi.innerHTML= '<span>1</span>)'+e.detail.content[0].innerHTML+' <span>'+e.detail.content[1].innerHTML+'</span>';
+        e.target.querySelector('ul').appendChild(newLi);
+      }
+      Cost.innerHTML = Number(Cost.innerHTML) + Number(e.detail.content[1].innerHTML);
+      this.sendMessage({where: e.detail.sender, title: this.localEvents.response, content:  true});
+    }})
+
+  this.CLIENT.addEventListener(this.localEvents.response,  e=>{
+  alert('Ваша кредитная карта не расчитана на сумму больше '+this.cost_limit);
+  });
+  }
+
+  createMessage(eventTitle='testEvent', content='test', sender=null){
+    return new CustomEvent( eventTitle, {
+      detail: {content, sender},
+      bubbles: false
+    });
+  }
+
+  sendMessage(params) {
+    params.where.dispatchEvent( this.createMessage( params.title, params.content,  params.sender ) );
+  }
+
+  load_data() {
+    fetch(this.showcaseURI)
+    .then( (response) => {
+     return response.json();
+     })
+    .then( (data) => {
+    for (let [key, value] of Object.entries(data))
+  {
+  let li = document.createElement('li');
+  li.id = key;
+  li.innerHTML = '<img src="AppCatalog.png" alt="Товар"/><p>Название: <span>'+key+'</span><br/>Цена:<span>'+value+'</span></p>';
+  this.showcase.appendChild(li);
+  let button = document.createElement('button');
+    button.innerHTML = 'Добавить в корзину';
+    button.addEventListener('click', e => {
+    this.sendMessage({
+            where: this.SERVER,
+            title: this.localEvents.query,
+            content: e.target.parentElement.querySelectorAll('p > span'),
+            sender: e.target.parentElement
+          });
+  });
+    this.showcase.querySelector('li:last-child').appendChild(button);
+  }})
+    .catch( alert );
+  }
+}
+
+  obj = new Score('data.json', '#score_parent', '#basket', 350);
+</script>
+  </body>
+</html>
