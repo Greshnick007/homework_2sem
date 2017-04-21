@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+	<div id = 'forResultKod' style="font-weight: bold"></div>
+	<div id = 'forResultPhp'></div>
+	<script src="/j/dblttl"></script>
+	<script>{
+	const dataPhp = 'Goss';
+    const dataKod = 'Goss';
+	let formData = new FormData();
+	formData.append('src', dataPhp);
+
+	fetch('https://php-study1-gossoudarev.c9users.io/students/Alena_Luda.php', {
+		method: 'POST',
+		body: formData
+	})
+	.then((data) => data.json())
+	.then((phpData) => {
+		fetch('https://kodaktor.ru/api/md5', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				src: dataKod,
+			})
+		})
+		.then((data) => data.json())
+		.then((kodData) => {  
+			console.log('kodData: ', kodData.md5);
+			console.log('phpData: ', phpData.md5);
+			document.querySelector('#forResultKod').textContent = kodData.md5;
+			document.querySelector('#forResultPhp').textContent = phpData.md5;
+			if (kodData.md5 == phpData.md5) {
+				document.querySelector('#forResultKod').style.color = 'green'; 
+				document.querySelector('#forResultPhp').style.color = 'green'; 
+			}
+		});
+	});
+}</script>
+</body>
+</html>
