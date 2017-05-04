@@ -1,1 +1,7 @@
-﻿{"hdd":"80", "sdd":"150","usbdrive":"8"}
+﻿{
+"hdd":"80", 
+"sdd":"150",
+"usbdrive":"8",
+"macbook":"200",
+"mouse":"100"
+}
