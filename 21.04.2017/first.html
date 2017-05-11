@@ -1,0 +1,66 @@
+﻿<html>
+<head>
+<title>Задание 1</title>
+</head>
+<body>
+<div>
+	
+</div>
+	<script>
+	class Query {
+		constructor(URI_POST, URI_POSTll) {
+			this.URI_POST = URI_POST;
+			this.URI_POSTll = URI_POSTll;
+			this.init();
+		}
+
+		init () {
+		fetch(this.URI_POST, {
+			method : 'post'})
+	  		.then(function(response) {
+	   				 return response.json();
+	   				 
+	   		})
+			.then((data) => {
+		  		this.add_h2_child(data);
+	  		});
+	}
+
+	add_h2_child (num) {
+		let h2 = document.createElement('h2');
+		h2.innerHTML = num;
+		document.querySelector('div').appendChild(h2);
+		this.get_n(num);
+	}
+
+	get_n(num) {
+	fetch(this.URI_POSTll, 
+		{method : 'post', 
+		headers : {
+			'Content-type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		body : 'n='+num})
+	  		.then(function(response) {
+	   				 return response.json();
+	   		})
+			.then((data) => {
+		  		this.add_ul_child(data);
+	  		});
+	}
+
+	add_ul_child(info) {
+		let ul = document.createElement('ul');
+			for (let date in info) {
+				let li = document.createElement('li');
+				li.textContent = info[date];
+				ul.appendChild(li);
+			}
+		
+		document.querySelector('div').appendChild(ul);
+	}
+	}
+
+	let obj = new Query("https://lr.kodaktor.ru", "https://kodaktor.ru/sleep");
+	</script>
+</body>
+</html>
