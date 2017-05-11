@@ -11,8 +11,12 @@ Docker_Hub c доступными образами: <a href="https://hub.docker.
 Задание 6 Клонирование объекта <a href="https://www.webpackbin.com/bins/-KfSReTDUMN_aMoL8uN7">https://www.webpackbin.com/bins/-KfSReTDUMN_aMoL8uN7</a><br/>
 Задание 7 Вывод JSON-дерева <a href="print_JSON.html">print_JSON.html</a><br/>
 Задание 8 Создание корзины с помощью DispathEvent <a href="/Magazine">Magazine</a><br/>
-Задание за 24.04.2017: <a href="/21.04.2017">тыц</a>
-Задание 9 <a href="https://goo.gl/E3xGjH">Modularity</a> и исходники <a href="/Modularity">тут</a>
-Задание 10 Обощающее клиентское задание: <a href="https://kodaktor.ru/5a975a4">тыц</a>
-Scorm-пакет (login - student, pass - student): <a href="https://stanislav007.moodlecloud.com/login/index.php">тыц</a>
-Final Homework: <a href="https://greshnick007.github.io/Introduction/index.html">тыц</a>
+Задание за 24.04.2017: <a href="/21.04.2017">тыц</a><br/>
+Задание 9 <a href="https://goo.gl/E3xGjH">Modularity</a> и исходники <a href="/Modularity">тут</a><br/>
+Задание 10 Обощающее клиентское задание: <a href="https://kodaktor.ru/5a975a4">тыц</a><br/>
+Scorm-пакет (login - student, pass - student): <a href="https://stanislav007.moodlecloud.com/login/index.php">тыц</a><br/>
+Final Homework: <a href="https://greshnick007.github.io/Introduction/index.html">тыц</a><br/>
+
+P.S.<br/>
+<a href="https://www.youtube.com/watch?v=bUubN3etMGg">Друпал 8 Обзор</a><br/>
+<a href="https://www.youtube.com/watch?v=rDFcz-oxG_g">Фреймворк Codeigniter</a>
